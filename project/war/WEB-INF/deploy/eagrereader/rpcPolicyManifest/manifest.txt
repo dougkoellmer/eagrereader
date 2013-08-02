@@ -1,0 +1,3 @@
+# Module eagrereader
+# RPC service class, partial path of RPC policy file
+eagrereader.client.GreetingService, A6021B30E2C5582C09C4EAF27B00DB21.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: eagrereader.client.GreetingService
+path: A6021B30E2C5582C09C4EAF27B00DB21.gwt.rpc
