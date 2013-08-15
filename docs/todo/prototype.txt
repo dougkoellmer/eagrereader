@@ -1,6 +1,6 @@
 - make sure behavior of going to /ExploringGeology/Chapter5 is acceptable considering that the primary address is /ExploringGeology/PageXXX
 
-
+- try to route snaptoaddress through to snaptocoordinate
 
 
 
