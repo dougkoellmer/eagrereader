@@ -69,6 +69,8 @@ public final class ServerApp extends bhA_ServerApp
 		config.gridExpansionDelta = 1;
 		config.startingZ = 128;
 		
+		config.mainPage = "http://reader.eagreinteractive.com";
+		
 		config.privateRecaptchaKey = "6LdrmOUSAAAAAEg6K9DUYLIXJ11qBMIYL6qrP8HF";
 		config.publicRecaptchaKey = "6LdrmOUSAAAAAJakkVeEWYa6iatpT3YA6tNemg5I";
 		
@@ -76,6 +78,9 @@ public final class ServerApp extends bhA_ServerApp
 		
 		super.entryPoint(config);
 		
-		addAdminHandler(new createGrid(PrototypeCellCreator.class, ServerBookGrid.class),	bhE_AdminRequestPath.createGrid);
+		setAdminHandler(new createGrid(PrototypeCellCreator.class, ServerBookGrid.class),	bhE_AdminRequestPath.createGrid);
+		
+		//--- DRK > For now disabling sign ups...also disabled on client.
+		bh_s.txnMngr.setRequestHandler(null, bhE_RequestPath.signUp);
 	}
 }

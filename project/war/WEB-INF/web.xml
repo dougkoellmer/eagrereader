@@ -11,7 +11,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>bhTransactionServlet</servlet-name>
-		<url-pattern>/r.er/t</url-pattern>
+		<url-pattern>/r.t</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -22,6 +22,15 @@
 	<servlet-mapping>
 		<servlet-name>bhAdminServlet</servlet-name>
 		<url-pattern>/r.admin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>bhSignInServlet</servlet-name>
+		<servlet-class>b33hive.server.thirdparty.servlet.bhSignInServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bhSignInServlet</servlet-name>
+		<url-pattern>/r.signin</url-pattern>
 	</servlet-mapping>
 	
 
@@ -41,12 +50,12 @@
 
 
 	<servlet>
-		<servlet-name>er_jsp</servlet-name>
-		<jsp-file>/er.min.jsp</jsp-file>
+		<servlet-name>index_jsp</servlet-name>
+		<jsp-file>/index.min.jsp</jsp-file>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>er_jsp</servlet-name>
+		<servlet-name>index_jsp</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 

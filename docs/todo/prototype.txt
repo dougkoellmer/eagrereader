@@ -1,0 +1,10 @@
+- make sure behavior of going to /ExploringGeology/Chapter5 is acceptable considering that the primary address is /ExploringGeology/PageXXX
+
+
+
+
+
+
+- probably gotta get e-mail set up for forgot password operation.
+
+- hook up telemetry db

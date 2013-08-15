@@ -41,28 +41,72 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 {
 	private static Logger s_logger = Logger.getLogger(PrototypeCellCreator.class.getName());
 	
+	private enum Book
+	{
+		ExploringGeology(173, 7, 5),
+		ExploringGeography(180, 13, 3);
+		
+		private final int m_startImageIndex;
+		private final int m_pageCount;
+		private final int m_chapter;
+		
+		private Book(int startImageIndex, int pageCount, int chapter)
+		{
+			m_startImageIndex = startImageIndex;
+			m_pageCount = pageCount;
+			m_chapter = chapter;
+		}
+		
+		public int getStartImageIndex()
+		{
+			return m_startImageIndex;
+		}
+		
+		public int getPageCount()
+		{
+			return m_pageCount;
+		}
+		
+		public int getChapter()
+		{
+			return m_chapter;
+		}
+	};
+	
 	@Override
 	public void initialize(ServletContext context)
 	{
 	}
-
-	@Override
-	public void run(bhTransactionRequest request, bhTransactionResponse response, bhTransactionContext context, bhUserSession session, bhServerUser user)
+	
+	private boolean createCell(Book book, int page, bhI_BlobManager blobManager, bhServerCodePrivileges privileges, bhTransactionResponse response)
 	{
-		bhServerCodePrivileges privileges = new bhServerCodePrivileges();
-		privileges.setNetworkPrivilege(bhE_NetworkPrivilege.ALL);
-		privileges.setCharacterQuota(bhE_CharacterQuota.TIER_1);
+		int pageIndex = page - 1;
 		
-		bhGridCoordinate coordinate = new bhGridCoordinate(0, 0);
+		bhGridCoordinate coordinate = new bhGridCoordinate(pageIndex, book.ordinal());
 		bhServerCellAddressMapping mapping = new bhServerCellAddressMapping(bhE_GridType.ACTIVE, coordinate);
 		
-		bhServerCellAddress address = new bhServerCellAddress("test");
+		bhServerCellAddress pageAddress = new bhServerCellAddress(book.name()+"/Page"+(pageIndex+100));
+		bhServerCellAddress[] addresses;
 		
-		bhI_BlobManager blobManager = bh_s.blobMngrFactory.create(bhE_BlobCacheLevel.LOCAL, bhE_BlobCacheLevel.PERSISTENT);
+		if( pageIndex == 0 )
+		{
+			bhServerCellAddress chapterAddress = new bhServerCellAddress(book.name()+"/Chapter"+book.getChapter());
+			bhServerCellAddress bookAddress = new bhServerCellAddress(book.name());
+			
+			addresses = new bhServerCellAddress[3];
+			addresses[0] = pageAddress;
+			addresses[1] = chapterAddress;
+			addresses[2] = bookAddress;
+		}
+		else
+		{
+			addresses = new bhServerCellAddress[1];
+			addresses[0] = pageAddress;
+		}
 		
 		if( bhU_CellCode.getCell(blobManager, mapping, response) == null )
 		{
-			bhBlobTransaction_CreateCell createCellTxn = new bhBlobTransaction_CreateCell(address, coordinate, privileges);
+			bhBlobTransaction_CreateCell createCellTxn = new bhBlobTransaction_CreateCell(addresses, coordinate, privileges);
 			
 			try
 			{
@@ -72,18 +116,35 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 			{
 				response.setError(bhE_ResponseError.SERVER_EXCEPTION);
 				
-				return;
+				return false;
 			}
+		}
+		else
+		{
+			bhBlobTransaction_SetCellAddress setCellAddyTxn = new bhBlobTransaction_SetCellAddress(mapping, addresses);
+			
+			try
+			{
+				setCellAddyTxn.perform(bhE_BlobTransactionType.MULTI_BLOB_TYPE, 1);
+			}
+			catch (bhBlobException e)
+			{
+				response.setError(bhE_ResponseError.SERVER_EXCEPTION);
+				
+				return false;
+			}
+			
 		}
 	
 		//--- DRK > Get the source code for the cell.
-		String code = "TESTING";
+		String image = "/r.img/pages/IMG_0"+ (book.getStartImageIndex()+pageIndex)+".jpg";
+		String code = "<html><head></head><body style='position:absolute; width:100%; height:100%; overflow:hidden;'><img src='"+image+"'/></body></html>";
 		bhServerCode sourceCode = new bhServerCode(code, bhE_CodeType.SOURCE);
 		
 		//--- DRK > Get the cell itself.
 		bhServerCell persistedCell = bhU_CellCode.getCellForCompile(blobManager, mapping, response);
-		
-		if( persistedCell == null )  return;
+	
+		if( persistedCell == null )  return false;
 		
 		bhCompilerResult result = bhU_CellCode.compileCell(persistedCell, sourceCode, mapping);
 		
@@ -93,14 +154,36 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 			
 			response.setError(bhE_ResponseError.SERVICE_EXCEPTION);
 			
-			return;
+			return false;
 		}
 
 		if( !bhU_CellCode.saveBackCompiledCell(blobManager, mapping, persistedCell, response) )
 		{
 			response.setError(bhE_ResponseError.SERVICE_EXCEPTION);
 			
-			return;
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public void run(bhTransactionRequest request, bhTransactionResponse response, bhTransactionContext context, bhUserSession session, bhServerUser user)
+	{
+		bhServerCodePrivileges privileges = new bhServerCodePrivileges();
+		privileges.setNetworkPrivilege(bhE_NetworkPrivilege.ALL);
+		privileges.setCharacterQuota(bhE_CharacterQuota.TIER_1);
+		
+		bhI_BlobManager blobManager = bh_s.blobMngrFactory.create(bhE_BlobCacheLevel.LOCAL, bhE_BlobCacheLevel.PERSISTENT);
+		
+		for( int i = 0; i < Book.values().length; i++ )
+		{
+			Book book = Book.values()[i];
+			
+			for( int j = 0; j < book.getPageCount(); j++ )
+			{
+				this.createCell(book, j+1, blobManager, privileges, response);
+			}
 		}
 	}
 }

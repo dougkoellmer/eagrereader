@@ -1,9 +1,12 @@
 package eagre.reader.client.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.*;
 
 import b33hive.client.app.bhA_ClientApp;
 import b33hive.client.app.bhE_Platform;
+import b33hive.client.app.bhE_StartUpStage;
 import b33hive.client.app.bhPlatformInfo;
 import b33hive.client.app.bhClientAppConfig;
 import b33hive.client.app.bh_c;
@@ -38,12 +41,15 @@ import b33hive.client.ui.bhE_ZIndex;
 import b33hive.client.ui.bhS_UI;
 import b33hive.client.ui.bhViewConfig;
 import b33hive.client.ui.bhViewController;
+import b33hive.client.ui.tabs.bhI_Tab;
 import b33hive.client.ui.tabs.code.bhCellSandbox;
+import b33hive.client.ui.tabs.code.bhCodeEditorTab;
 import b33hive.client.ui.tooltip.bhE_ToolTipType;
 import b33hive.client.ui.tooltip.bhToolTipManager;
 import b33hive.server.transaction.bhE_AdminRequestPath;
 import b33hive.shared.bhE_AppEnvironment;
 import b33hive.shared.app.bh;
+import b33hive.shared.app.bhAppConfig;
 import b33hive.shared.app.bhS_App;
 import b33hive.shared.app.bhA_App;
 import b33hive.shared.code.bhA_CodeCompiler;
@@ -64,6 +70,8 @@ import b33hive.shared.transaction.bhRequestPathManager;
 
 import eagre.reader.client.entities.BookGrid;
 import eagre.reader.client.entities.ClientUser;
+import eagre.reader.client.ui.ViewController;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
@@ -84,7 +92,7 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	
 	public ClientApp()
 	{
-		
+		super(makeAppConfig(), makeViewConfig());
 	}
 	
 	/**
@@ -92,12 +100,16 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	 */
 	public void onModuleLoad()
 	{
+		super.startUp(bhE_StartUpStage.values()[0]);
+	}
+	
+	private static bhClientAppConfig makeAppConfig()
+	{
 		bhClientAppConfig appConfig = new bhClientAppConfig();
-		bhViewConfig viewConfig = new bhViewConfig();
 		
-		appConfig.cellHudHeight = S_ClientApp.CELL_HUD_HEIGHT;
-		appConfig.minSnapTime	 = S_ClientApp.MIN_SNAP_TIME;
-		appConfig.snapTimeRange = S_ClientApp.SNAP_TIME_RANGE;
+		appConfig.cellHudHeight = 0;
+		appConfig.minSnapTime	 = .5;
+		appConfig.snapTimeRange = 1.5;
 		appConfig.framerateMilliseconds = S_ClientApp.FRAMERATE;
 		appConfig.backOffDistance = S_ClientApp.VIEWING_CELL_CLOSE_BUTTON_DISTANCE_OFFSET;
 		appConfig.addressCacheSize = S_ClientApp.ADDRESS_CACHE_SIZE;
@@ -110,15 +122,53 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		appConfig.user = new ClientUser();
 		appConfig.grid = new BookGrid();
 		
+		return appConfig;
+	}
+	
+	private static bhViewConfig makeViewConfig()
+	{
+		bhViewConfig viewConfig = new bhViewConfig();
+		
 		viewConfig.magnifierTickCount = 7;
+		viewConfig.magFadeInTime_seconds = .5;
 		viewConfig.defaultPageTitle = "Eagre Reader";
 		
-		super.entryPoint(appConfig, viewConfig);
+		return viewConfig;
 	}
 	
 	@Override
-	protected void entryPoint_continued()
+	protected void stage_registerStateMachine()
 	{
-		super.entryPoint_continued();
+		super.stage_registerStateMachine();
+	
+		registerCodeEditingStates();
+		List<Class<? extends bhA_State>> tabStates = new ArrayList<Class<? extends bhA_State>>();
+		tabStates.add(StateMachine_EditingCode.class);
+		bhA_State.register(new StateMachine_Tabs(tabStates));
+	}
+	
+	@Override
+	protected void stage_startViewManagers()
+	{
+		super.stage_startViewManagers();
+		
+		//TODO(DRK) Ugh, real hacky here.
+		bhI_Tab[] tabs = {new bhCodeEditorTab()};
+		m_viewConfig.tabs = tabs;
+		m_viewConfig.stateEventListener = new ViewController(m_viewConfig, m_appConfig);
+	
+		registerCodeEditingStates();
+		List<Class<? extends bhA_State>> tabStates = new ArrayList<Class<? extends bhA_State>>();
+		tabStates.add(StateMachine_EditingCode.class);
+		bhA_State.register(new StateMachine_Tabs(tabStates));
+		
+	}
+	
+	@Override
+	protected void stage_gunshotSound()
+	{
+		super.stage_gunshotSound();
+		
+		bhA_Action.perform(StateContainer_Base.HideSupplementState.class);
 	}
 }
