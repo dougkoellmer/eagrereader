@@ -1,8 +1,0 @@
-{
-  "description": "HTML5 plus some other stuff",
-  "inherits": [
-      "html4-attributes.json",
-      "html5-attributes.json",
-      "htmlext-attributes.json"
-      ]
-}

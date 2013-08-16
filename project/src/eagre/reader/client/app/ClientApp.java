@@ -110,7 +110,7 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		appConfig.cellHudHeight = 0;
 		appConfig.minSnapTime	 = .5;
 		appConfig.snapTimeRange = 1.5;
-		appConfig.framerateMilliseconds = S_ClientApp.FRAMERATE;
+		appConfig.framerate_milliseconds = S_ClientApp.FRAMERATE;
 		appConfig.backOffDistance = S_ClientApp.VIEWING_CELL_CLOSE_BUTTON_DISTANCE_OFFSET;
 		appConfig.addressCacheSize = S_ClientApp.ADDRESS_CACHE_SIZE;
 		appConfig.addressCacheExpiration_seconds = S_ClientApp.ADDRESS_CACHE_EXPIRATION;
@@ -137,6 +137,17 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	}
 	
 	@Override
+	protected void stage_startViewManagers()
+	{
+		super.stage_startViewManagers();
+		
+		//TODO(DRK) Ugh, real hacky here.
+		bhI_Tab[] tabs = {new bhCodeEditorTab()};
+		m_viewConfig.tabs = tabs;
+		m_viewConfig.stateEventListener = new ViewController(m_viewConfig, m_appConfig);		
+	}
+	
+	@Override
 	protected void stage_registerStateMachine()
 	{
 		super.stage_registerStateMachine();
@@ -145,23 +156,6 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		List<Class<? extends bhA_State>> tabStates = new ArrayList<Class<? extends bhA_State>>();
 		tabStates.add(StateMachine_EditingCode.class);
 		bhA_State.register(new StateMachine_Tabs(tabStates));
-	}
-	
-	@Override
-	protected void stage_startViewManagers()
-	{
-		super.stage_startViewManagers();
-		
-		//TODO(DRK) Ugh, real hacky here.
-		bhI_Tab[] tabs = {new bhCodeEditorTab()};
-		m_viewConfig.tabs = tabs;
-		m_viewConfig.stateEventListener = new ViewController(m_viewConfig, m_appConfig);
-	
-		registerCodeEditingStates();
-		List<Class<? extends bhA_State>> tabStates = new ArrayList<Class<? extends bhA_State>>();
-		tabStates.add(StateMachine_EditingCode.class);
-		bhA_State.register(new StateMachine_Tabs(tabStates));
-		
 	}
 	
 	@Override
