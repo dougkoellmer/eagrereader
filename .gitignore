@@ -5,7 +5,7 @@ project/gwt-unitCache/
 *.class
 *~
 */war/gwt
-*/war/WEB-INF/classes
+project/war/WEB-INF/classes
 target
 /caja
 /caja-release
