@@ -93,6 +93,8 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	public ClientApp()
 	{
 		super(makeAppConfig(), makeViewConfig());
+		
+		// test commit
 	}
 	
 	/**
