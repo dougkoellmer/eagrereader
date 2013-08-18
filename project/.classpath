@@ -6,7 +6,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/recaptcha4j-0.0.8.jar"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry excluding="b33hive/client/managers/bhHistoryManager.java|b33hive/server/handlers/admin/renameCell.java|b33hive/client/ui/cell/bhVisualCellHighlight.java|b33hive/client/states/State_ViewingBookmarks.java" kind="src" path="lib/b33hive/src"/>
+	<classpathentry kind="src" path="lib/b33hive/src"/>
 	<classpathentry kind="src" path="lib/json"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>

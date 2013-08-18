@@ -9,7 +9,7 @@
 	<meta name="description" content="Welcome to b33hive, a totally new way to create and share online.">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-    <link type="text/css" rel="stylesheet" href="/r.app/min.css?v=1">
+    <link type="text/css" rel="stylesheet" href="/r.app/min.css?v=1376847974">
 
     <title>Eagre Reader</title>
     
@@ -53,6 +53,6 @@
 	</div>
 	
 	<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LdrmOUSAAAAAJakkVeEWYa6iatpT3YA6tNemg5I"></script>
-	 <script type="text/javascript" language="javascript" src="/r.app/min.js?v=1376601941"></script>
+	 <script type="text/javascript" language="javascript" src="/r.app/min.js?v=1376847973"></script>
   </body>
 </html>
