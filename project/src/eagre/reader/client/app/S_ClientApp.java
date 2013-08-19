@@ -1,9 +1,7 @@
 package eagre.reader.client.app;
 
 public class S_ClientApp
-{
-	public static final int FRAMERATE = 33; // milliseconds between frames
-	
+{	
 	public static final int CODE_CACHE_SIZE = 128;
 	public static final double CODE_CACHE_EXPIRATION = 60 * 5; // seconds;
 	

@@ -93,8 +93,6 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	public ClientApp()
 	{
 		super(makeAppConfig(), makeViewConfig());
-		
-		// test commit
 	}
 	
 	/**
@@ -112,7 +110,7 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		appConfig.cellHudHeight = 0;
 		appConfig.minSnapTime	 = .5;
 		appConfig.snapTimeRange = 1.5;
-		appConfig.framerate_milliseconds = S_ClientApp.FRAMERATE;
+		appConfig.framerate_milliseconds = 33; // milliseconds between frames
 		appConfig.backOffDistance = S_ClientApp.VIEWING_CELL_CLOSE_BUTTON_DISTANCE_OFFSET;
 		appConfig.addressCacheSize = S_ClientApp.ADDRESS_CACHE_SIZE;
 		appConfig.addressCacheExpiration_seconds = S_ClientApp.ADDRESS_CACHE_EXPIRATION;

@@ -7,6 +7,9 @@
   
   <!-- Configure path to GWT SDK -->
   <property name="gwt.sdk" location="${env.GWT_HOME}" />
+  <property name="gae.sdk" location="${env.GAE_HOME}" />
+  
+  <import file="${gae.sdk}/config/user/ant-macros.xml" />
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
@@ -91,8 +94,27 @@
 		  <arg value="./war/index.min.jsp" />
 	</exec>
   </target>
+ 
+
+  
+  <target name="deploy" depends="" description="Deploys a ready-to-go war package to the server environment.">
+	 
+	 <!-- <input message="Please enter password:" addproperty="gae.password" />
+	 
+	 <exec executable="echo" inputstring="${gae.password}" newenvironment="false" dir="./">
+		  <arg line="echo &quot;${gae.password}&quot; | sh ../project/lib/b33hive/scripts/client/appcfg.sh  email=admin@eagreinteractive.com update ./war" />
+		 <arg value="${gae.password} | ../project/lib/b33hive/scripts/client/appcfg.sh" />
+		  <arg value="-email=admin@eagreinteractive.com" />
+		  <arg value="update" />
+		  <arg value="./war" />		
+	</exec> -->
+	
+	<appcfg action="update" war="./war" />
+  </target>
   
   <target name="build" depends="gwtc,build_js,build_css,minify_html" description="Build this project" />
+  
+  <target name="build_and_deploy" depends="build,deploy" description="Build this project" />
 
   <target name="war" depends="build" description="Create a war file">
     <zip destfile="Hello.war" basedir="war"/>
