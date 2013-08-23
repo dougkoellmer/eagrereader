@@ -1,8 +1,6 @@
 
 - try to route snaptoaddress through to snaptocoordinate
 
-- get css building, and make one meta command that updates both js and css
-
 - figure out why window resizes every time you focus cell, or at least the first time
 
 - figure out what loading animation will look like, how it will behave

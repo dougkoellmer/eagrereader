@@ -109,7 +109,7 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		
 		appConfig.cellHudHeight = 0;
 		appConfig.minSnapTime	 = .5;
-		appConfig.snapTimeRange = 1.5;
+		appConfig.maxSnapTime = 1.5;
 		appConfig.framerate_milliseconds = 33; // milliseconds between frames
 		appConfig.backOffDistance = S_ClientApp.VIEWING_CELL_CLOSE_BUTTON_DISTANCE_OFFSET;
 		appConfig.addressCacheSize = S_ClientApp.ADDRESS_CACHE_SIZE;
@@ -117,6 +117,7 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		appConfig.codeCacheSize = S_ClientApp.CODE_CACHE_SIZE;
 		appConfig.codeCacheExpiration_seconds = S_ClientApp.ADDRESS_CACHE_EXPIRATION;
 		appConfig.floatingHistoryUpdateFreq_seconds = S_ClientApp.SET_HISTORY_STATE_MIN_FREQUENCY;
+		appConfig.publicRecaptchaKey = eagre.reader.shared.app.bhS_App.PUBLIC_RECAPTCHA_KEY;
 		appConfig.appId = "er";
 		
 		appConfig.user = new ClientUser();
