@@ -2,12 +2,12 @@ package eagre.reader.server.app;
 
 import java.util.logging.Logger;
 
-import b33hive.server.account.bh_s;
-import b33hive.server.app.bhA_ServerApp;
-import b33hive.server.app.bhServerAppConfig;
-import b33hive.server.handlers.admin.createGrid;
-import b33hive.server.transaction.bhE_AdminRequestPath;
-import b33hive.shared.transaction.bhE_RequestPath;
+import swarm.server.account.sm_s;
+import swarm.server.app.bhA_ServerApp;
+import swarm.server.app.bhServerAppConfig;
+import swarm.server.handlers.admin.createGrid;
+import swarm.server.transaction.bhE_AdminRequestPath;
+import swarm.shared.transaction.bhE_RequestPath;
 import eagre.reader.server.entities.ServerBookGrid;
 import eagre.reader.server.homecells.PrototypeCellCreator;
 import eagre.reader.shared.app.bhS_App;
@@ -41,6 +41,6 @@ public final class ServerApp extends bhA_ServerApp
 		setAdminHandler(new createGrid(ServerBookGrid.class), bhE_AdminRequestPath.createGrid);
 		
 		//--- DRK > For now disabling sign ups...also disabled on client.
-		bh_s.txnMngr.setRequestHandler(null, bhE_RequestPath.signUp);
+		sm_s.txnMngr.setRequestHandler(null, bhE_RequestPath.signUp);
 	}
 }

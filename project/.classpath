@@ -6,7 +6,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/recaptcha4j-0.0.8.jar"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="lib/b33hive/src"/>
+	<classpathentry kind="src" path="lib/swarm/src"/>
 	<classpathentry kind="src" path="lib/json"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>

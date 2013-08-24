@@ -7,7 +7,7 @@
   <inherits name="com.google.gwt.logging.Logging"/>
   <inherits name="com.google.gwt.xml.XML"/>
   
-  <inherits name="b33hive.gwt_module"/>
+  <inherits name="swarm.gwt_module"/>
   
   <!-- <set-property name="user.agent" value="ie9"/> -->
   

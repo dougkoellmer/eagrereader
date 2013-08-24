@@ -9,7 +9,7 @@
 	<meta name="description" content="Welcome to b33hive, a totally new way to create and share online.">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-    <link type="text/css" rel="stylesheet" href="/r.app/min.css?v=1377113628">
+    <link type="text/css" rel="stylesheet" href="/r.app/min.css?v=1377284469">
 
     <title>Eagre Reader</title>
     
@@ -36,23 +36,23 @@
 	<input style="display: none;" type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
 
 	<noscript>
-		<table id='error_splash' class='bh_unsupported_platform_font' style='width:100%; height:100%;'><tr><td style='vertical-align:middle; text-align:center;'>
+		<table id='error_splash' class='sm_unsupported_platform_font' style='width:100%; height:100%;'><tr><td style='vertical-align:middle; text-align:center;'>
 		<img style='width:280px; height:255px;' src='/r.img/b33.png'/><br><br><br>
 		<div id='error_splash_message'>Sorry, but your web browser must have JavaScript enabled in order for b33hive to display correctly.</div>
 		</td></tr></table>
 	</noscript>
 
-	<div id="bh_initial_sync_screen">
+	<div id="sm_initial_sync_screen">
 		<table style="width: 100%; height: 100%;">
 			<tr>
 				<td align="center" style="vertical-align: middle;">
-					<div id="bh_initial_sync_screen_label"></div>
+					<div id="sm_initial_sync_screen_label"></div>
 				</td>
 			</tr>
 		</table>
 	</div>
 	
 	<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LdrmOUSAAAAAJakkVeEWYa6iatpT3YA6tNemg5I"></script>
-	 <script type="text/javascript" language="javascript" src="/r.app/min.js?v=1377113627"></script>
+	 <script type="text/javascript" language="javascript" src="/r.app/min.js?v=1377284467"></script>
   </body>
 </html>

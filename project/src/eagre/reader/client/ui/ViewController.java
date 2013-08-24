@@ -1,12 +1,12 @@
 package eagre.reader.client.ui;
 
-import b33hive.client.app.bhClientAppConfig;
-import b33hive.client.states.StateContainer_Base;
-import b33hive.client.ui.bhViewConfig;
-import b33hive.client.ui.bhViewController;
-import b33hive.client.ui.bh_view;
-import b33hive.client.ui.cell.bhVisualCellContainer;
-import b33hive.shared.statemachine.bhA_Action;
+import swarm.client.app.bhClientAppConfig;
+import swarm.client.states.StateContainer_Base;
+import swarm.client.ui.bhViewConfig;
+import swarm.client.ui.bhViewController;
+import swarm.client.ui.sm_view;
+import swarm.client.ui.cell.bhVisualCellContainer;
+import swarm.shared.statemachine.bhA_Action;
 
 public class ViewController extends bhViewController
 {
@@ -22,7 +22,7 @@ public class ViewController extends bhViewController
 		
 		super.startUpCoreUI();
 		
-		bhVisualCellContainer cellContainer = bh_view.splitPanel.getCellContainer();
+		bhVisualCellContainer cellContainer = sm_view.splitPanel.getCellContainer();
 		cellContainer.getCellContainerInner().getElement().getStyle().setBackgroundColor("#9DA1CA");
 	}
 }

@@ -1,6 +1,6 @@
 package eagre.reader.server.entities;
 
-import b33hive.server.entities.*;
+import swarm.server.entities.*;
 
 public class ServerBookGrid extends bhServerGrid
 {

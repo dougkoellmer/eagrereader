@@ -5,37 +5,37 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
-import b33hive.server.account.bhUserSession;
-import b33hive.server.account.bh_s;
-import b33hive.server.blobxn.bhBlobTransaction_AddCellToUser;
-import b33hive.server.blobxn.bhBlobTransaction_CreateCell;
-import b33hive.server.blobxn.bhBlobTransaction_SetCellAddress;
-import b33hive.server.blobxn.bhBlobTransaction_SetCellPrivileges;
-import b33hive.server.data.blob.bhBlobException;
-import b33hive.server.data.blob.bhE_BlobCacheLevel;
-import b33hive.server.data.blob.bhE_BlobTransactionType;
-import b33hive.server.data.blob.bhI_BlobManager;
-import b33hive.server.entities.bhE_GridType;
-import b33hive.server.entities.bhServerCell;
-import b33hive.server.entities.bhServerUser;
-import b33hive.server.handlers.bhU_CellCode;
-import b33hive.server.handlers.admin.bhI_HomeCellCreator;
-import b33hive.server.structs.bhServerCellAddress;
-import b33hive.server.structs.bhServerCellAddressMapping;
-import b33hive.server.structs.bhServerCode;
-import b33hive.server.structs.bhServerCodePrivileges;
-import b33hive.server.transaction.bhTransactionContext;
-import b33hive.shared.app.bhS_App;
-import b33hive.shared.code.bhCompilerResult;
-import b33hive.shared.code.bhE_CompilationStatus;
-import b33hive.shared.entities.bhE_CharacterQuota;
-import b33hive.shared.entities.bhE_CodeType;
-import b33hive.shared.structs.bhCodePrivileges;
-import b33hive.shared.structs.bhE_NetworkPrivilege;
-import b33hive.shared.structs.bhGridCoordinate;
-import b33hive.shared.transaction.bhE_ResponseError;
-import b33hive.shared.transaction.bhTransactionRequest;
-import b33hive.shared.transaction.bhTransactionResponse;
+import swarm.server.account.bhUserSession;
+import swarm.server.account.sm_s;
+import swarm.server.blobxn.bhBlobTransaction_AddCellToUser;
+import swarm.server.blobxn.bhBlobTransaction_CreateCell;
+import swarm.server.blobxn.bhBlobTransaction_SetCellAddress;
+import swarm.server.blobxn.bhBlobTransaction_SetCellPrivileges;
+import swarm.server.data.blob.bhBlobException;
+import swarm.server.data.blob.bhE_BlobCacheLevel;
+import swarm.server.data.blob.bhE_BlobTransactionType;
+import swarm.server.data.blob.bhI_BlobManager;
+import swarm.server.entities.bhE_GridType;
+import swarm.server.entities.bhServerCell;
+import swarm.server.entities.bhServerUser;
+import swarm.server.handlers.bhU_CellCode;
+import swarm.server.handlers.admin.bhI_HomeCellCreator;
+import swarm.server.structs.bhServerCellAddress;
+import swarm.server.structs.bhServerCellAddressMapping;
+import swarm.server.structs.bhServerCode;
+import swarm.server.structs.bhServerCodePrivileges;
+import swarm.server.transaction.bhTransactionContext;
+import swarm.shared.app.bhS_App;
+import swarm.shared.code.bhCompilerResult;
+import swarm.shared.code.bhE_CompilationStatus;
+import swarm.shared.entities.bhE_CharacterQuota;
+import swarm.shared.entities.bhE_CodeType;
+import swarm.shared.structs.bhCodePrivileges;
+import swarm.shared.structs.bhE_NetworkPrivilege;
+import swarm.shared.structs.bhGridCoordinate;
+import swarm.shared.transaction.bhE_ResponseError;
+import swarm.shared.transaction.bhTransactionRequest;
+import swarm.shared.transaction.bhTransactionResponse;
 
 public class PrototypeCellCreator implements bhI_HomeCellCreator
 {
@@ -174,7 +174,7 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 		privileges.setNetworkPrivilege(bhE_NetworkPrivilege.ALL);
 		privileges.setCharacterQuota(bhE_CharacterQuota.TIER_1);
 		
-		bhI_BlobManager blobManager = bh_s.blobMngrFactory.create(bhE_BlobCacheLevel.LOCAL, bhE_BlobCacheLevel.PERSISTENT);
+		bhI_BlobManager blobManager = sm_s.blobMngrFactory.create(bhE_BlobCacheLevel.LOCAL, bhE_BlobCacheLevel.PERSISTENT);
 		
 		for( int i = 0; i < Book.values().length; i++ )
 		{
