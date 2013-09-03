@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
 
-import swarm.client.app.bhA_ClientApp;
-import swarm.client.app.bhE_Platform;
-import swarm.client.app.bhE_StartUpStage;
-import swarm.client.app.bhPlatformInfo;
-import swarm.client.app.bhClientAppConfig;
-import swarm.client.app.sm_c;
-import swarm.client.code.bhClientCodeCompiler;
-import swarm.client.input.bhBrowserHistoryManager;
-import swarm.client.input.bhBrowserAddressManager;
-import swarm.client.input.bhClickManager;
-import swarm.client.thirdparty.json.bhGwtJsonFactory;
-import swarm.client.managers.bhClientAccountManager;
-import swarm.client.managers.bhCellAddressManager;
-import swarm.client.managers.bhGridManager;
-import swarm.client.managers.bhUserManager;
-import swarm.client.thirdparty.captcha.bhRecaptchaWrapper;
+import swarm.client.app.smA_ClientApp;
+import swarm.client.app.smE_Platform;
+import swarm.client.app.smE_StartUpStage;
+import swarm.client.app.smPlatformInfo;
+import swarm.client.app.smClientAppConfig;
+import swarm.client.app.smAppContext;
+import swarm.client.code.smClientCodeCompiler;
+import swarm.client.input.smBrowserHistoryManager;
+import swarm.client.input.smBrowserAddressManager;
+import swarm.client.input.smClickManager;
+import swarm.client.thirdparty.json.smGwtJsonFactory;
+import swarm.client.managers.smClientAccountManager;
+import swarm.client.managers.smCellAddressManager;
+import swarm.client.managers.smGridManager;
+import swarm.client.managers.smUserManager;
+import swarm.client.thirdparty.captcha.smRecaptchaWrapper;
 import swarm.client.states.*;
 import swarm.client.states.account.StateMachine_Account;
 import swarm.client.states.account.State_AccountStatusPending;
@@ -33,44 +33,46 @@ import swarm.client.states.camera.State_ViewingCell;
 import swarm.client.states.code.StateMachine_EditingCode;
 import swarm.client.states.code.State_EditingCode;
 import swarm.client.states.code.State_EditingCodeBlocker;
-import swarm.client.time.bhU_Time;
-import swarm.client.transaction.bhClientTransactionManager;
-import swarm.client.thirdparty.transaction.bhGwtRequestDispatcher;
-import swarm.client.transaction.bhInlineRequestDispatcher;
-import swarm.client.ui.bhE_ZIndex;
-import swarm.client.ui.bhS_UI;
-import swarm.client.ui.bhViewConfig;
-import swarm.client.ui.bhViewController;
-import swarm.client.ui.tabs.bhI_Tab;
-import swarm.client.ui.tabs.code.bhCellSandbox;
-import swarm.client.ui.tabs.code.bhCodeEditorTab;
-import swarm.client.ui.tooltip.bhE_ToolTipType;
-import swarm.client.ui.tooltip.bhToolTipManager;
-import swarm.server.transaction.bhE_AdminRequestPath;
-import swarm.shared.bhE_AppEnvironment;
-import swarm.shared.app.sm;
-import swarm.shared.app.bhAppConfig;
-import swarm.shared.app.bhS_App;
-import swarm.shared.app.bhA_App;
-import swarm.shared.code.bhA_CodeCompiler;
-import swarm.shared.debugging.bhI_AssertionDelegate;
-import swarm.shared.debugging.bhTelemetryAssert;
-import swarm.shared.debugging.bhU_Debug;
-import swarm.shared.json.bhA_JsonFactory;
-import swarm.shared.json.bhJsonHelper;
-import swarm.shared.reflection.bhI_Class;
-import swarm.shared.statemachine.bhA_Action;
-import swarm.shared.statemachine.bhA_State;
-import swarm.shared.statemachine.bhA_StateMachine;
-import swarm.shared.structs.bhCellAddress;
-import swarm.shared.time.bhI_TimeSource;
-import swarm.shared.transaction.bhE_RequestPath;
-import swarm.shared.transaction.bhE_TelemetryRequestPath;
-import swarm.shared.transaction.bhRequestPathManager;
+import swarm.client.time.smU_Time;
+import swarm.client.transaction.smClientTransactionManager;
+import swarm.client.thirdparty.transaction.smGwtRequestDispatcher;
+import swarm.client.transaction.smInlineRequestDispatcher;
+import swarm.client.view.smE_ZIndex;
+import swarm.client.view.smS_UI;
+import swarm.client.view.smViewConfig;
+import swarm.client.view.smViewController;
+import swarm.client.view.tabs.smI_Tab;
+import swarm.client.view.tabs.code.smCellSandbox;
+import swarm.client.view.tabs.code.smCodeEditorTab;
+import swarm.client.view.tooltip.smE_ToolTipType;
+import swarm.client.view.tooltip.smToolTipManager;
+import swarm.server.transaction.smE_AdminRequestPath;
+import swarm.shared.smE_AppEnvironment;
+import swarm.shared.app.smSharedAppContext;
+import swarm.shared.app.smAppConfig;
+import swarm.shared.app.smS_App;
+import swarm.shared.app.smA_App;
+import swarm.shared.code.smA_CodeCompiler;
+import swarm.shared.debugging.smI_AssertionDelegate;
+import swarm.shared.debugging.smTelemetryAssert;
+import swarm.shared.debugging.smU_Debug;
+import swarm.shared.json.smA_JsonFactory;
+import swarm.shared.json.smJsonHelper;
+import swarm.shared.reflection.smI_Class;
+import swarm.shared.statemachine.smA_Action;
+import swarm.shared.statemachine.smA_State;
+import swarm.shared.statemachine.smA_StateMachine;
+import swarm.shared.statemachine.smI_StateEventListener;
+import swarm.shared.structs.smCellAddress;
+import swarm.shared.time.smI_TimeSource;
+import swarm.shared.transaction.smE_RequestPath;
+import swarm.shared.transaction.smE_TelemetryRequestPath;
+import swarm.shared.transaction.smRequestPathManager;
 
 import eagre.reader.client.entities.BookGrid;
 import eagre.reader.client.entities.ClientUser;
-import eagre.reader.client.ui.ViewController;
+import eagre.reader.client.view.ViewController;
+import eagre.reader.shared.app.S_App;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -86,7 +88,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class ClientApp extends bhA_ClientApp implements EntryPoint
+public class ClientApp extends smA_ClientApp implements EntryPoint
 {
 	private static final Logger s_logger = Logger.getLogger(ClientApp.class.getName());	
 	
@@ -100,12 +102,12 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	 */
 	public void onModuleLoad()
 	{
-		super.startUp(bhE_StartUpStage.values()[0]);
+		super.startUp(smE_StartUpStage.values()[0]);
 	}
 	
-	private static bhClientAppConfig makeAppConfig()
+	private static smClientAppConfig makeAppConfig()
 	{
-		bhClientAppConfig appConfig = new bhClientAppConfig();
+		smClientAppConfig appConfig = new smClientAppConfig();
 		
 		appConfig.cellHudHeight = 0;
 		appConfig.minSnapTime	 = .5;
@@ -117,7 +119,7 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		appConfig.codeCacheSize = S_ClientApp.CODE_CACHE_SIZE;
 		appConfig.codeCacheExpiration_seconds = S_ClientApp.ADDRESS_CACHE_EXPIRATION;
 		appConfig.floatingHistoryUpdateFreq_seconds = S_ClientApp.SET_HISTORY_STATE_MIN_FREQUENCY;
-		appConfig.publicRecaptchaKey = eagre.reader.shared.app.bhS_App.PUBLIC_RECAPTCHA_KEY;
+		appConfig.publicRecaptchaKey = S_App.PUBLIC_RECAPTCHA_KEY;
 		appConfig.appId = "er";
 		
 		appConfig.user = new ClientUser();
@@ -126,9 +128,9 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		return appConfig;
 	}
 	
-	private static bhViewConfig makeViewConfig()
+	private static smViewConfig makeViewConfig()
 	{
-		bhViewConfig viewConfig = new bhViewConfig();
+		smViewConfig viewConfig = new smViewConfig();
 		
 		viewConfig.magnifierTickCount = 7;
 		viewConfig.magFadeInTime_seconds = .5;
@@ -143,20 +145,21 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 		super.stage_startViewManagers();
 		
 		//TODO(DRK) Ugh, real hacky here.
-		bhI_Tab[] tabs = {new bhCodeEditorTab()};
-		m_viewConfig.tabs = tabs;
-		m_viewConfig.stateEventListener = new ViewController(m_viewConfig, m_appConfig);		
+		smI_Tab[] tabs = {new smCodeEditorTab(m_viewContext)};
+		m_viewConfig.tabs = tabs;	
 	}
 	
 	@Override
-	protected void stage_registerStateMachine()
+	protected void stage_registerStateMachine(smI_StateEventListener stateEventListener_null)
 	{
-		super.stage_registerStateMachine();
+		ViewController viewController = new ViewController(m_viewContext, m_viewConfig, m_appConfig);
+		
+		super.stage_registerStateMachine(viewController);
 	
 		registerCodeEditingStates();
-		List<Class<? extends bhA_State>> tabStates = new ArrayList<Class<? extends bhA_State>>();
+		List<Class<? extends smA_State>> tabStates = new ArrayList<Class<? extends smA_State>>();
 		tabStates.add(StateMachine_EditingCode.class);
-		bhA_State.register(new StateMachine_Tabs(tabStates));
+		m_stateContext.registerState(new StateMachine_Tabs(tabStates));
 	}
 	
 	@Override
@@ -164,6 +167,6 @@ public class ClientApp extends bhA_ClientApp implements EntryPoint
 	{
 		super.stage_gunshotSound();
 		
-		bhA_Action.perform(StateContainer_Base.HideSupplementState.class);
+		m_stateContext.performAction(Action_Base_HideSupplementState.class);
 	}
 }

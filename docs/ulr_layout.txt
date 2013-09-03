@@ -1,0 +1,7 @@
+- url layout of pages will reflect ToC layout exactly, or as much as possible, so "ExploringGeography/Page1", "ExploringGeography/Chapter1", "ExploringGeology/Chapter1/Section1", etc. all point to the same page (may not actually be page 1 for the first page of chapter 1...not sure how that will work)
+
+- resources will reflect the epub standard, so maybe "ExploringGeography/images/blah.jpg", whatever it is.
+
+- widgets will probably be their own subdirectory again, so "ExploringGeography/widgets/pressure/img/tube.png"...widgets control the spec of their own subdirectory...book should be agnostic to how they're organized internally
+
+- 

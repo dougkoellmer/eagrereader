@@ -5,39 +5,39 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
-import swarm.server.account.bhUserSession;
-import swarm.server.account.sm_s;
-import swarm.server.blobxn.bhBlobTransaction_AddCellToUser;
-import swarm.server.blobxn.bhBlobTransaction_CreateCell;
-import swarm.server.blobxn.bhBlobTransaction_SetCellAddress;
-import swarm.server.blobxn.bhBlobTransaction_SetCellPrivileges;
-import swarm.server.data.blob.bhBlobException;
-import swarm.server.data.blob.bhE_BlobCacheLevel;
-import swarm.server.data.blob.bhE_BlobTransactionType;
-import swarm.server.data.blob.bhI_BlobManager;
-import swarm.server.entities.bhE_GridType;
-import swarm.server.entities.bhServerCell;
-import swarm.server.entities.bhServerUser;
-import swarm.server.handlers.bhU_CellCode;
-import swarm.server.handlers.admin.bhI_HomeCellCreator;
-import swarm.server.structs.bhServerCellAddress;
-import swarm.server.structs.bhServerCellAddressMapping;
-import swarm.server.structs.bhServerCode;
-import swarm.server.structs.bhServerCodePrivileges;
-import swarm.server.transaction.bhTransactionContext;
-import swarm.shared.app.bhS_App;
-import swarm.shared.code.bhCompilerResult;
-import swarm.shared.code.bhE_CompilationStatus;
-import swarm.shared.entities.bhE_CharacterQuota;
-import swarm.shared.entities.bhE_CodeType;
-import swarm.shared.structs.bhCodePrivileges;
-import swarm.shared.structs.bhE_NetworkPrivilege;
-import swarm.shared.structs.bhGridCoordinate;
-import swarm.shared.transaction.bhE_ResponseError;
-import swarm.shared.transaction.bhTransactionRequest;
-import swarm.shared.transaction.bhTransactionResponse;
+import swarm.server.account.smUserSession;
+import swarm.server.app.smServerContext;
+import swarm.server.blobxn.smBlobTransaction_AddCellToUser;
+import swarm.server.blobxn.smBlobTransaction_CreateCell;
+import swarm.server.blobxn.smBlobTransaction_SetCellAddress;
+import swarm.server.blobxn.smBlobTransaction_SetCellPrivileges;
+import swarm.server.data.blob.smBlobException;
+import swarm.server.data.blob.smE_BlobCacheLevel;
+import swarm.server.data.blob.smE_BlobTransactionType;
+import swarm.server.data.blob.smI_BlobManager;
+import swarm.server.entities.smE_GridType;
+import swarm.server.entities.smServerCell;
+import swarm.server.entities.smServerUser;
+import swarm.server.handlers.smU_CellCode;
+import swarm.server.handlers.admin.smI_HomeCellCreator;
+import swarm.server.structs.smServerCellAddress;
+import swarm.server.structs.smServerCellAddressMapping;
+import swarm.server.structs.smServerCode;
+import swarm.server.structs.smServerCodePrivileges;
+import swarm.server.transaction.smTransactionContext;
+import swarm.shared.app.smS_App;
+import swarm.shared.code.smCompilerResult;
+import swarm.shared.code.smE_CompilationStatus;
+import swarm.shared.entities.smE_CharacterQuota;
+import swarm.shared.entities.smE_CodeType;
+import swarm.shared.structs.smCodePrivileges;
+import swarm.shared.structs.smE_NetworkPrivilege;
+import swarm.shared.structs.smGridCoordinate;
+import swarm.shared.transaction.smE_ResponseError;
+import swarm.shared.transaction.smTransactionRequest;
+import swarm.shared.transaction.smTransactionResponse;
 
-public class PrototypeCellCreator implements bhI_HomeCellCreator
+public class PrototypeCellCreator implements smI_HomeCellCreator
 {
 	private static Logger s_logger = Logger.getLogger(PrototypeCellCreator.class.getName());
 	
@@ -73,63 +73,66 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 		}
 	};
 	
+	private smServerContext m_serverContext;
+	
 	@Override
-	public void initialize(ServletContext context)
+	public void initialize(smServerContext serverContext, ServletContext servletContext)
 	{
+		m_serverContext = serverContext;
 	}
 	
-	private boolean createCell(Book book, int page, bhI_BlobManager blobManager, bhServerCodePrivileges privileges, bhTransactionResponse response)
+	private boolean createCell(Book book, int page, smI_BlobManager blobManager, smServerCodePrivileges privileges, smTransactionResponse response)
 	{
 		int pageIndex = page - 1;
 		
-		bhGridCoordinate coordinate = new bhGridCoordinate(pageIndex, book.ordinal());
-		bhServerCellAddressMapping mapping = new bhServerCellAddressMapping(bhE_GridType.ACTIVE, coordinate);
+		smGridCoordinate coordinate = new smGridCoordinate(pageIndex, book.ordinal());
+		smServerCellAddressMapping mapping = new smServerCellAddressMapping(smE_GridType.ACTIVE, coordinate);
 		
-		bhServerCellAddress pageAddress = new bhServerCellAddress(book.name()+"/Page"+(pageIndex+100));
-		bhServerCellAddress[] addresses;
+		smServerCellAddress pageAddress = new smServerCellAddress(book.name()+"/Page"+(pageIndex+100));
+		smServerCellAddress[] addresses;
 		
 		if( pageIndex == 0 )
 		{
-			bhServerCellAddress chapterAddress = new bhServerCellAddress(book.name()+"/Chapter"+book.getChapter());
-			bhServerCellAddress bookAddress = new bhServerCellAddress(book.name());
+			smServerCellAddress chapterAddress = new smServerCellAddress(book.name()+"/Chapter"+book.getChapter());
+			smServerCellAddress bookAddress = new smServerCellAddress(book.name());
 			
-			addresses = new bhServerCellAddress[3];
+			addresses = new smServerCellAddress[3];
 			addresses[0] = pageAddress;
 			addresses[1] = chapterAddress;
 			addresses[2] = bookAddress;
 		}
 		else
 		{
-			addresses = new bhServerCellAddress[1];
+			addresses = new smServerCellAddress[1];
 			addresses[0] = pageAddress;
 		}
 		
-		if( bhU_CellCode.getCell(blobManager, mapping, response) == null )
+		if( smU_CellCode.getCell(blobManager, mapping, response) == null )
 		{
-			bhBlobTransaction_CreateCell createCellTxn = new bhBlobTransaction_CreateCell(addresses, coordinate, privileges);
+			smBlobTransaction_CreateCell createCellTxn = new smBlobTransaction_CreateCell(addresses, coordinate, privileges, 1);
 			
 			try
 			{
-				createCellTxn.perform(bhE_BlobTransactionType.MULTI_BLOB_TYPE, 1);
+				createCellTxn.perform(m_serverContext.blobMngrFactory, smE_BlobTransactionType.MULTI_BLOB_TYPE, 1);
 			}
-			catch (bhBlobException e)
+			catch (smBlobException e)
 			{
-				response.setError(bhE_ResponseError.SERVER_EXCEPTION);
+				response.setError(smE_ResponseError.SERVER_EXCEPTION);
 				
 				return false;
 			}
 		}
 		else
 		{
-			bhBlobTransaction_SetCellAddress setCellAddyTxn = new bhBlobTransaction_SetCellAddress(mapping, addresses);
+			smBlobTransaction_SetCellAddress setCellAddyTxn = new smBlobTransaction_SetCellAddress(mapping, addresses);
 			
 			try
 			{
-				setCellAddyTxn.perform(bhE_BlobTransactionType.MULTI_BLOB_TYPE, 1);
+				setCellAddyTxn.perform(m_serverContext.blobMngrFactory, smE_BlobTransactionType.MULTI_BLOB_TYPE, 1);
 			}
-			catch (bhBlobException e)
+			catch (smBlobException e)
 			{
-				response.setError(bhE_ResponseError.SERVER_EXCEPTION);
+				response.setError(smE_ResponseError.SERVER_EXCEPTION);
 				
 				return false;
 			}
@@ -139,27 +142,29 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 		//--- DRK > Get the source code for the cell.
 		String image = "/r.img/pages/IMG_0"+ (book.getStartImageIndex()+pageIndex)+".jpg";
 		String code = "<html><head></head><body style='position:absolute; width:100%; height:100%; overflow:hidden;'><img src='"+image+"'/></body></html>";
-		bhServerCode sourceCode = new bhServerCode(code, bhE_CodeType.SOURCE);
+		smServerCode sourceCode = new smServerCode(code, smE_CodeType.SOURCE);
 		
 		//--- DRK > Get the cell itself.
-		bhServerCell persistedCell = bhU_CellCode.getCellForCompile(blobManager, mapping, response);
+		smServerCell persistedCell = smU_CellCode.getCellForCompile(blobManager, mapping, response);
 	
 		if( persistedCell == null )  return false;
 		
-		bhCompilerResult result = bhU_CellCode.compileCell(persistedCell, sourceCode, mapping);
+		smCompilerResult result = smU_CellCode.compileCell(m_serverContext.codeCompiler, persistedCell, sourceCode, mapping);
 		
-		if( result.getStatus() != bhE_CompilationStatus.NO_ERROR )
+		if( result.getStatus() != smE_CompilationStatus.NO_ERROR )
 		{
 			s_logger.severe("Couldn't compile source code: ");
 			
-			response.setError(bhE_ResponseError.SERVICE_EXCEPTION);
+			response.setError(smE_ResponseError.SERVICE_EXCEPTION);
 			
 			return false;
 		}
 
-		if( !bhU_CellCode.saveBackCompiledCell(blobManager, mapping, persistedCell, response) )
+		smI_BlobManager cachingBlobMngr = m_serverContext.blobMngrFactory.create(smE_BlobCacheLevel.MEMCACHE);
+		
+		if( !smU_CellCode.saveBackCompiledCell(blobManager, cachingBlobMngr, mapping, persistedCell, response) )
 		{
-			response.setError(bhE_ResponseError.SERVICE_EXCEPTION);
+			response.setError(smE_ResponseError.SERVICE_EXCEPTION);
 			
 			return false;
 		}
@@ -168,13 +173,13 @@ public class PrototypeCellCreator implements bhI_HomeCellCreator
 	}
 
 	@Override
-	public void run(bhTransactionRequest request, bhTransactionResponse response, bhTransactionContext context, bhUserSession session, bhServerUser user)
+	public void run(smTransactionRequest request, smTransactionResponse response, smTransactionContext context, smUserSession session, smServerUser user)
 	{
-		bhServerCodePrivileges privileges = new bhServerCodePrivileges();
-		privileges.setNetworkPrivilege(bhE_NetworkPrivilege.ALL);
-		privileges.setCharacterQuota(bhE_CharacterQuota.TIER_1);
+		smServerCodePrivileges privileges = new smServerCodePrivileges();
+		privileges.setNetworkPrivilege(smE_NetworkPrivilege.ALL);
+		privileges.setCharacterQuota(smE_CharacterQuota.TIER_1);
 		
-		bhI_BlobManager blobManager = sm_s.blobMngrFactory.create(bhE_BlobCacheLevel.LOCAL, bhE_BlobCacheLevel.PERSISTENT);
+		smI_BlobManager blobManager = m_serverContext.blobMngrFactory.create(smE_BlobCacheLevel.LOCAL, smE_BlobCacheLevel.PERSISTENT);
 		
 		for( int i = 0; i < Book.values().length; i++ )
 		{

@@ -1,0 +1,42 @@
+The book, extends grid, stored in NoSql (datastore)
+==================================
+
+- keyed by GUID
+
+- has grid width, height, cell size, cell's taken, whatever from parent class
+
+- release data
+
+- version
+
+- metadata, like publisher, authors, page count
+
+- perhaps table of contents and spine (whatever that is) in the same blob?
+
+- Things like author, ToC, etc. should be their own class, and members of the book class
+
+- probably a query string with the book's 
+
+
+
+
+
+The epub itself
+===============
+
+Think it's a good idea to store a raw reference to the epub, keyed by unique id, probably on cloud storage, in case i need to update the NoSql model with extra info
+
+
+
+
+
+The content
+===========
+
+I guess cloud storage? The problem is that datastore has a max entity size of 1MB...probably fine for 99% of pages and images and other resources, but throw a large movie or model in there and we're fucked...it also doesn't seem a good conceptual match for the datastore, in the sense that these are just files
+
+
+
+
+
+

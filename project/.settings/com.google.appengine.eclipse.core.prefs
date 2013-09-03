@@ -5,6 +5,7 @@ gaeDeployDialogSettings=
 gaeHrdEnabled=true
 googleCloudSqlEnabled=true
 localDevMySqlEnabled=false
+ormEnhancementInclusions=
 prodDatabaseName=er_accounts
 prodDatabasePassword=9da9RoTsyjFBgmo0YMHv2K18pWjB6RGR
 prodDatabaseUser=er_admin
