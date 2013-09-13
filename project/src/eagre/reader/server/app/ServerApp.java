@@ -38,8 +38,6 @@ public final class ServerApp extends smA_ServerApp
 		super.entryPoint(config);
 		
 		setAdminHandler(new createGrid(ServerBookGrid.class), smE_AdminRequestPath.createGrid);
-		
-		//--- DRK > For now disabling sign ups...also disabled on client.
-		m_context.txnMngr.setRequestHandler(null, smE_RequestPath.signUp);
+		setNormalHandler(null, smE_RequestPath.signUp);
 	}
 }

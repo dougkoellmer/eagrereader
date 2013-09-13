@@ -1,6 +1,6 @@
 <!doctype html>
 
-<%@page import="b33hive.server.transaction.*"%>
+<%@page import="swarm.server.transaction.*"%>
 <%@ page session="false"%>
 
 <html>
@@ -9,7 +9,7 @@
 	<meta name="description" content="Welcome to b33hive, a totally new way to create and share online.">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-    <link type="text/css" rel="stylesheet" href="/r.app/min.css?v=1377284469">
+    <link type="text/css" rel="stylesheet" href="/r.app/min.css?v=1379038425">
 
     <title>Eagre Reader</title>
     
@@ -17,7 +17,7 @@
     
     <script>
     var RecaptchaOptions={theme : 'custom'};
-    <%  bhU_InlineTransactions.addInlineTransactions(request, response, out);  %>
+    <%  smU_InlineTransactions.addInlineTransactions(request, response, out);  %>
     
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -53,6 +53,6 @@
 	</div>
 	
 	<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LdrmOUSAAAAAJakkVeEWYa6iatpT3YA6tNemg5I"></script>
-	 <script type="text/javascript" language="javascript" src="/r.app/min.js?v=1377284467"></script>
+	 <script type="text/javascript" language="javascript" src="/r.app/min.js?v=1379038423"></script>
   </body>
 </html>

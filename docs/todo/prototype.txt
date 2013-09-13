@@ -1,16 +1,13 @@
 
-- try to route snaptoaddress through to snaptocoordinate
+- try to route snaptoaddress through to snaptocoordinate, maybe
 
-- figure out why window resizes every time you focus cell, or at least the first time
-
-- figure out what loading animation will look like, how it will behave
+- figure out what loading animation will look like, how it will behav
 
 
 
 
 
 
-
-- probably gotta get e-mail set up for forgot password operation.
+- gotta get e-mail set up for forgot password operation, eventually
 
 - filter out local debug server from analytics

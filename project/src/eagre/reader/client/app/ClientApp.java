@@ -42,7 +42,6 @@ import swarm.client.view.smS_UI;
 import swarm.client.view.smViewConfig;
 import swarm.client.view.smViewController;
 import swarm.client.view.tabs.smI_Tab;
-import swarm.client.view.tabs.code.smCellSandbox;
 import swarm.client.view.tabs.code.smCodeEditorTab;
 import swarm.client.view.tooltip.smE_ToolTipType;
 import swarm.client.view.tooltip.smToolTipManager;
@@ -102,7 +101,7 @@ public class ClientApp extends smA_ClientApp implements EntryPoint
 	 */
 	public void onModuleLoad()
 	{
-		super.startUp(smE_StartUpStage.values()[0]);
+		this.startUp(smE_StartUpStage.values()[0]);
 	}
 	
 	private static smClientAppConfig makeAppConfig()
@@ -121,6 +120,8 @@ public class ClientApp extends smA_ClientApp implements EntryPoint
 		appConfig.floatingHistoryUpdateFreq_seconds = S_ClientApp.SET_HISTORY_STATE_MIN_FREQUENCY;
 		appConfig.publicRecaptchaKey = S_App.PUBLIC_RECAPTCHA_KEY;
 		appConfig.appId = "er";
+		appConfig.verboseTransactions = false;
+		appConfig.useVirtualSandbox = false;
 		
 		appConfig.user = new ClientUser();
 		appConfig.grid = new BookGrid();
@@ -137,6 +138,12 @@ public class ClientApp extends smA_ClientApp implements EntryPoint
 		viewConfig.defaultPageTitle = "Eagre Reader";
 		
 		return viewConfig;
+	}
+	
+	@Override
+	protected void stage_browserSupportCheck()
+	{
+		super.stage_browserSupportCheck();
 	}
 	
 	@Override
@@ -167,6 +174,6 @@ public class ClientApp extends smA_ClientApp implements EntryPoint
 	{
 		super.stage_gunshotSound();
 		
-		m_stateContext.performAction(Action_Base_HideSupplementState.class);
+		//m_stateContext.performAction(Action_Base_HideSupplementState.class);
 	}
 }

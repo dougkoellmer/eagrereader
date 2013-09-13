@@ -34,7 +34,7 @@
         debug="true" debuglevel="lines,vars,source">
       <classpath refid="project.class.path"/>
     </javac>
-	<javac srcdir="lib/b33hive/src" includes="**" encoding="utf-8"
+	<javac srcdir="lib/swarm/src" includes="**" encoding="utf-8"
         destdir="war/WEB-INF/classes"
         source="1.5" target="1.5" nowarn="true"
         debug="true" debuglevel="lines,vars,source">
@@ -42,7 +42,7 @@
     </javac>
     <copy todir="war/WEB-INF/classes">
       <fileset dir="src" excludes="**/*.java"/>
-	  <fileset dir="lib/b33hive/src" excludes="**/*.java"/>
+	  <fileset dir="lib/swarm/src" excludes="**/*.java"/>
     </copy>
   </target>
 
@@ -50,7 +50,7 @@
     <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
       <classpath>
         <pathelement location="src"/>
-		<pathelement location="lib/b33hive/src"/>
+		<pathelement location="lib/swarm/src"/>
 		
         <path refid="project.class.path"/>
         <pathelement location="../../validation-api-1.0.0.GA.jar" />
@@ -68,19 +68,19 @@
   
   <target name="build_js" description="Takes GWT output, cats together minified support JS, updates min.js version in HTML to circumvent caching">
 	  <exec executable="sh" newenvironment="false" dir="./">
-		  <arg value="../project/lib/b33hive/scripts/client/build_js_default.sh" />
+		  <arg value="../project/lib/swarm/scripts/client/build_js_default.sh" />
 	</exec>
   </target>
   
   <target name="build_css" description="Takes a bunch of CSS files, cats them, minifies them, updates resource version in HTML">
-	  <exec executable="sh" newenvironment="false" dir="../project/lib/b33hive/scripts/client/">
+	  <exec executable="sh" newenvironment="false" dir="../project/lib/swarm/scripts/client/">
 		  <arg value="minify_css.sh" />
 	</exec>
 	
-	<copy file="./lib/b33hive/bin/min.css" todir="./war/r.app/" />
+	<copy file="./lib/swarm/bin/min.css" todir="./war/r.app/" />
 	
 	<exec executable="sh" newenvironment="false" dir="">
-		  <arg value="../project/lib/b33hive/scripts/client/update_resource_version.sh" />
+		  <arg value="../project/lib/swarm/scripts/client/update_resource_version.sh" />
 		  <arg value="./war/index.jsp" />
 		  <arg value="min.css" />
 	</exec>
@@ -89,7 +89,7 @@
   
   <target name="minify_html" description="Minifies main HTML file.">
 	  <exec executable="sh" newenvironment="false" dir="./">
-		  <arg value="../project/lib/b33hive/scripts/client/minify_html.sh" />
+		  <arg value="../project/lib/swarm/scripts/client/minify_html.sh" />
 		  <arg value="./war/index.jsp" />
 		  <arg value="./war/index.min.jsp" />
 	</exec>
@@ -102,8 +102,8 @@
 	 <!-- <input message="Please enter password:" addproperty="gae.password" />
 	 
 	 <exec executable="echo" inputstring="${gae.password}" newenvironment="false" dir="./">
-		  <arg line="echo &quot;${gae.password}&quot; | sh ../project/lib/b33hive/scripts/client/appcfg.sh  email=admin@eagreinteractive.com update ./war" />
-		 <arg value="${gae.password} | ../project/lib/b33hive/scripts/client/appcfg.sh" />
+		  <arg line="echo &quot;${gae.password}&quot; | sh ../project/lib/swarm/scripts/client/appcfg.sh  email=admin@eagreinteractive.com update ./war" />
+		 <arg value="${gae.password} | ../project/lib/swarm/scripts/client/appcfg.sh" />
 		  <arg value="-email=admin@eagreinteractive.com" />
 		  <arg value="update" />
 		  <arg value="./war" />		

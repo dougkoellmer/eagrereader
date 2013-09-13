@@ -149,7 +149,7 @@ public class PrototypeCellCreator implements smI_HomeCellCreator
 	
 		if( persistedCell == null )  return false;
 		
-		smCompilerResult result = smU_CellCode.compileCell(m_serverContext.codeCompiler, persistedCell, sourceCode, mapping);
+		smCompilerResult result = smU_CellCode.compileCell(m_serverContext.codeCompiler, persistedCell, sourceCode, mapping, m_serverContext.config.appId);
 		
 		if( result.getStatus() != smE_CompilationStatus.NO_ERROR )
 		{
