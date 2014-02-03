@@ -105,7 +105,7 @@ public class ClientApp extends A_ClientApp implements EntryPoint
 	{
 		ClientAppConfig appConfig = new ClientAppConfig();
 		
-		appConfig.cellHudHeight = 0;
+		appConfig.cellHudHeight = S_ClientApp.CELL_HUD_HEIGHT;
 		appConfig.minSnapTime	 = .5;
 		appConfig.snapTimeRange = 1;
 		appConfig.framerate_milliseconds = 33; // milliseconds between frames

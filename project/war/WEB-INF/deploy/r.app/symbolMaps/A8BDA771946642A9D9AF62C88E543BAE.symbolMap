@@ -3857,7 +3857,7 @@ g7,swarm.client.view.cell.VisualCellHighlight::VisualCellHighlight(Lswarm/client
 a,swarm.client.view.cell.VisualCellHighlight::m_lastScaling,swarm.client.view.cell.VisualCellHighlight,m_lastScaling,swarm/client/view/cell/VisualCellHighlight.java,36,-1
 b,swarm.client.view.cell.VisualCellHighlight::m_utilPoint1,swarm.client.view.cell.VisualCellHighlight,m_utilPoint1,swarm/client/view/cell/VisualCellHighlight.java,34,-1
 c,swarm.client.view.cell.VisualCellHighlight::m_viewContext,swarm.client.view.cell.VisualCellHighlight,m_viewContext,swarm/client/view/cell/VisualCellHighlight.java,38,-1
-h7,swarm.client.view.cell.VisualCellHighlight::onStateEvent(Lswarm/shared/statemachine/StateEvent;)V,swarm.client.view.cell.VisualCellHighlight,onStateEvent,swarm/client/view/cell/VisualCellHighlight.java,150,0
+h7,swarm.client.view.cell.VisualCellHighlight::onStateEvent(Lswarm/shared/statemachine/StateEvent;)V,swarm.client.view.cell.VisualCellHighlight,onStateEvent,swarm/client/view/cell/VisualCellHighlight.java,151,0
 i7,,swarm.client.view.cell.VisualCellManager,,swarm/client/view/cell/VisualCellManager.java,49,-1
 k7,swarm.client.view.cell.VisualCellManager::$clearAlerts(Lswarm/client/view/cell/VisualCellManager;)V,swarm.client.view.cell.VisualCellManager,$clearAlerts,swarm/client/view/cell/VisualCellManager.java,363,0
 j7,swarm.client.view.cell.VisualCellManager::$clinit()V,swarm.client.view.cell.VisualCellManager,$clinit,swarm/client/view/cell/VisualCellManager.java,49,0
