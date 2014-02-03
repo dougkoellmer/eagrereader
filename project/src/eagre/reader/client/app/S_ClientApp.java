@@ -24,5 +24,5 @@ public class S_ClientApp
 	
 	public static final double VIEWING_CELL_CLOSE_BUTTON_DISTANCE_OFFSET = 100;
 	
-	public static final String APP_ID = "sm";
+	public static final String APP_ID = "";
 }

@@ -2,7 +2,7 @@ package eagre.reader.server.entities;
 
 import swarm.server.entities.*;
 
-public class ServerBookGrid extends smServerGrid
+public class ServerBookGrid extends BaseServerGrid
 {
 	public ServerBookGrid()
 	{

@@ -1,16 +1,15 @@
 package eagre.reader.client.view;
 
-import swarm.client.app.smClientAppConfig;
+import swarm.client.app.ClientAppConfig;
 import swarm.client.states.Action_Base_HideSupplementState;
-import swarm.client.view.smViewConfig;
-import swarm.client.view.smViewController;
-import swarm.client.view.smViewContext;
-import swarm.client.view.cell.smVisualCellContainer;
-import swarm.shared.statemachine.smA_Action;
+import swarm.client.view.ViewConfig;
+import swarm.client.view.ViewContext;
+import swarm.client.view.cell.VisualCellContainer;
+import swarm.shared.statemachine.A_Action;
 
-public class ViewController extends smViewController
+public class ViewController extends swarm.client.view.ViewController
 {
-	public ViewController(smViewContext viewContext, smViewConfig config, smClientAppConfig appConfig)
+	public ViewController(ViewContext viewContext, ViewConfig config, ClientAppConfig appConfig)
 	{
 		super(viewContext, config, appConfig);
 	}
@@ -22,7 +21,7 @@ public class ViewController extends smViewController
 		
 		super.startUpCoreUI();
 		
-		smVisualCellContainer cellContainer = m_viewContext.splitPanel.getCellContainer();
+		VisualCellContainer cellContainer = m_viewContext.splitPanel.getCellContainer();
 		cellContainer.getCellContainerInner().getElement().getStyle().setBackgroundColor("#9DA1CA");
 	}
 }

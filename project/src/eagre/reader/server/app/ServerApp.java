@@ -2,16 +2,16 @@ package eagre.reader.server.app;
 
 import java.util.logging.Logger;
 
-import swarm.server.app.smA_ServerApp;
-import swarm.server.app.smServerAppConfig;
+import swarm.server.app.A_ServerApp;
+import swarm.server.app.ServerAppConfig;
 import swarm.server.handlers.admin.createGrid;
-import swarm.server.transaction.smE_AdminRequestPath;
-import swarm.shared.transaction.smE_RequestPath;
+import swarm.server.transaction.E_AdminRequestPath;
+import swarm.shared.transaction.E_RequestPath;
 import eagre.reader.server.entities.ServerBookGrid;
 import eagre.reader.server.homecells.PrototypeCellCreator;
 import eagre.reader.shared.app.S_App;
 
-public final class ServerApp extends smA_ServerApp
+public final class ServerApp extends A_ServerApp
 {
 	private static final Logger s_logger = Logger.getLogger(ServerApp.class.getName());
 
@@ -19,7 +19,7 @@ public final class ServerApp extends smA_ServerApp
 	{
 		super();
 		
-		smServerAppConfig config = new smServerAppConfig();
+		ServerAppConfig config = new ServerAppConfig();
 		
 		config.databaseUrl = "jdbc:google:rdbms://eagrereader:eagrereaderdb/";
 		config.accountsDatabase = "er_accounts";
@@ -37,7 +37,7 @@ public final class ServerApp extends smA_ServerApp
 		
 		super.entryPoint(config);
 		
-		setAdminHandler(new createGrid(ServerBookGrid.class), smE_AdminRequestPath.createGrid);
-		setNormalHandler(null, smE_RequestPath.signUp);
+		setAdminHandler(new createGrid(ServerBookGrid.class), E_AdminRequestPath.createGrid);
+		setNormalHandler(null, E_RequestPath.signUp);
 	}
 }

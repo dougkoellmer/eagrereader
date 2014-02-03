@@ -6,30 +6,30 @@
 
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>smTransactionServlet</servlet-name>
-		<servlet-class>swarm.server.thirdparty.servlet.smTransactionServlet</servlet-class>
+		<servlet-name>TransactionServlet</servlet-name>
+		<servlet-class>swarm.server.thirdparty.servlet.TransactionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>smTransactionServlet</servlet-name>
+		<servlet-name>TransactionServlet</servlet-name>
 		<url-pattern>/r.t</url-pattern>
 	</servlet-mapping>
 	
 	
 	<servlet>
-		<servlet-name>smAdminServlet</servlet-name>
-		<servlet-class>swarm.server.thirdparty.servlet.smAdminServlet</servlet-class>
+		<servlet-name>AdminServlet</servlet-name>
+		<servlet-class>swarm.server.thirdparty.servlet.AdminServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>smAdminServlet</servlet-name>
+		<servlet-name>AdminServlet</servlet-name>
 		<url-pattern>/r.admin</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>smSignInServlet</servlet-name>
-		<servlet-class>swarm.server.thirdparty.servlet.smSignInServlet</servlet-class>
+		<servlet-name>SignInServlet</servlet-name>
+		<servlet-class>swarm.server.thirdparty.servlet.SignInServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>smSignInServlet</servlet-name>
+		<servlet-name>SignInServlet</servlet-name>
 		<url-pattern>/r.signin</url-pattern>
 	</servlet-mapping>
 	

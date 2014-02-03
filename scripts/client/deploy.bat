@@ -1,1 +1,1 @@
-C:\code\appengine-java-sdk-1.8.0\bin/appcfg.cmd update ../../project/war
+C:\code\appengine-java-sdk-1.8.8\bin/appcfg.cmd --email=admin@eagreinteractive.com update ../../project/war
